@@ -1,81 +1,26 @@
 package hu.nagyhazi.view
 
 import android.os.Bundle
-import android.widget.EditText
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import hu.nagyhazi.R
+import hu.nagyhazi.viewmodel.LoginViewModel
 
-class StartActivity : BaseActivity() {
+class StartActivity : AppCompatActivity() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        firebaseAuth = FirebaseAuth.getInstance()
-
-        btnRegister.setOnClickListener { registerClick() }
-        btnLogin.setOnClickListener { loginClick() }
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        initFragment()
     }
 
-    fun EditText.validateNonEmpty(): Boolean {
-        if (text.isEmpty()) {
-            error = "Required"
-            return false
-        }
-        return true
+    private fun initFragment() {
+        val welcomeFragment = WelcomeFragment()
+        welcomeFragment.loginViewModel = loginViewModel
     }
 
-    private fun validateForm() = etEmail.validateNonEmpty() && etPassword.validateNonEmpty()
-
-    private fun registerClick() {
-        if (!validateForm()) {
-            return
-        }
-
-        showProgressDialog()
-
-        firebaseAuth
-            .createUserWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
-            .addOnSuccessListener { result ->
-                hideProgressDialog()
-
-                val firebaseUser = result.user
-                val profileChangeRequest = UserProfileChangeRequest.Builder()
-                    .setDisplayName(firebaseUser?.email?.substringBefore('@'))
-                    .build()
-                firebaseUser?.updateProfile(profileChangeRequest)
-
-                toast("Registration successful")
-            }
-            .addOnFailureListener { exception ->
-                hideProgressDialog()
-
-                toast(exception.message)
-            }
-    }
-
-    private fun loginClick() {
-        if (!validateForm()) {
-            return
-        }
-
-        showProgressDialog()
-
-        firebaseAuth
-            .signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
-            .addOnSuccessListener {
-                hideProgressDialog()
-
-                //startActivity(Intent(this@MainActivity, PostsActivity::class.java))
-                finish()
-            }
-            .addOnFailureListener { exception ->
-                hideProgressDialog()
-
-                toast(exception.localizedMessage)
-            }
-    }
 }
