@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
@@ -15,7 +14,6 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import hu.nagyhazi.R
 import hu.nagyhazi.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
-import kotlinx.android.synthetic.main.fragment_welcome.*
 
 class RegisterFragment : Fragment() {
 
@@ -44,8 +42,8 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initRegister(view: View) {
-        val email = etEmail.text.toString()
-        val pw = etPassword.text.toString()
+        val email = logEmail.text.toString()
+        val pw = logPw.text.toString()
         val rePw = rePassword.text.toString()
 
         if (email.isEmpty() || pw.isEmpty() || rePw.isEmpty()){

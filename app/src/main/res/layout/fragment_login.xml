@@ -15,7 +15,7 @@
         android:paddingTop="56dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailText"
+            android:id="@+id/logEmailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -25,7 +25,7 @@
             app:layout_constraintStart_toEndOf="parent">
 
             <EditText
-                android:id="@+id/etEmail"
+                android:id="@+id/logEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
@@ -39,12 +39,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/emailText"
+            app:layout_constraintTop_toBottomOf="@+id/logEmailText"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toEndOf="parent">
 
             <EditText
-                android:id="@+id/etPassword"
+                android:id="@+id/logPw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/password"
@@ -67,7 +67,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:src="@mipmap/ic_launcher_round"
-            app:layout_constraintBottom_toTopOf="@+id/emailText"
+            app:layout_constraintBottom_toTopOf="@+id/logEmailText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
