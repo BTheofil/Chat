@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "19160105235",
+    "firebase_url": "https://chat-8d3bc.firebaseio.com",
+    "project_id": "chat-8d3bc",
+    "storage_bucket": "chat-8d3bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19160105235:android:56583dd8b670e7b902dae6",
+        "android_client_info": {
+          "package_name": "hu.nagyhazi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19160105235-2un55f17a7j59fr22jrjqce3j4imptfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7r0tz3j024KI6nQVXDwpduHfCPQHX3Uw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19160105235-2un55f17a7j59fr22jrjqce3j4imptfv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
