@@ -6,7 +6,7 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="hu.nagyhazi.view.WelcomeFragment"
+        android:name="hu.nagyhazi.login.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="hu.nagyhazi.view.LoginFragment"
+        android:name="hu.nagyhazi.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="hu.nagyhazi.view.RegisterFragment"
+        android:name="hu.nagyhazi.login.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action

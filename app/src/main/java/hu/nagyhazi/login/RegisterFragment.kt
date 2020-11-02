@@ -1,4 +1,4 @@
-package hu.nagyhazi.view
+package hu.nagyhazi.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,24 +12,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import hu.nagyhazi.R
-import hu.nagyhazi.viewmodel.LoginViewModel
+import hu.nagyhazi.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : Fragment() {
 
     private lateinit var navController: NavController
-    lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_register, container, false)
-
-    @Suppress("DEPRECATION")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        loginViewModel = LoginViewModel(requireActivity().application)
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
