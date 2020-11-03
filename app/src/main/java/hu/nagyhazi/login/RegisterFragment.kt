@@ -56,10 +56,7 @@ class RegisterFragment : Fragment() {
 
                     Snackbar.make(view, "Success register", Snackbar.LENGTH_LONG).show()
 
-                    activity?.let{
-                        val intent = Intent (it, MainActivity::class.java)
-                        it.startActivity(intent)
-                    }
+                    navController.navigate(R.id.action_registerFragment_to_mainActivity)
                 }
                 .addOnFailureListener{
                     Snackbar.make(view, "Fail to create user: ${it.message}", Snackbar.LENGTH_LONG).show()

@@ -45,10 +45,7 @@ class LoginFragment : Fragment() {
                 .addOnSuccessListener  {
                     Snackbar.make(view, "Success login", Snackbar.LENGTH_LONG).show()
 
-                    activity?.let{
-                        val intent = Intent (it, MainActivity::class.java)
-                        it.startActivity(intent)
-                    }
+                    navController.navigate(R.id.action_loginFragment_to_mainActivity)
                 }
                 .addOnFailureListener{
                     Snackbar.make(view, "Fail to login user: ${it.message}", Snackbar.LENGTH_LONG).show()
