@@ -54,7 +54,7 @@ class RegisterFragment : Fragment() {
 
                     Snackbar.make(view, "Success register", Snackbar.LENGTH_LONG).show()
 
-                    //navController.navigate(R.id.action_registerFragment_to_frontFragment)
+                    navController.navigate(R.id.action_registerFragment_to_frontFragment)
                 }
                 .addOnFailureListener{
                     Snackbar.make(view, "Fail to create user: ${it.message}", Snackbar.LENGTH_LONG).show()
