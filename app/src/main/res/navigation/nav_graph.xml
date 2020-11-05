@@ -22,21 +22,17 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
+            android:id="@+id/action_loginFragment_to_frontFragment"
+            app:destination="@id/frontFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="hu.nagyhazi.login.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
-    </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="hu.nagyhazi.view.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/frontFragment"
+        android:name="hu.nagyhazi.view.FrontFragment"
+        android:label="fragment_front"
+        tools:layout="@layout/fragment_front" />
 </navigation>

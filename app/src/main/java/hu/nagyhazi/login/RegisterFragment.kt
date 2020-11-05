@@ -1,6 +1,5 @@
 package hu.nagyhazi.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import hu.nagyhazi.R
-import hu.nagyhazi.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : Fragment() {
@@ -56,7 +54,7 @@ class RegisterFragment : Fragment() {
 
                     Snackbar.make(view, "Success register", Snackbar.LENGTH_LONG).show()
 
-                    navController.navigate(R.id.action_registerFragment_to_mainActivity)
+                    //navController.navigate(R.id.action_registerFragment_to_frontFragment)
                 }
                 .addOnFailureListener{
                     Snackbar.make(view, "Fail to create user: ${it.message}", Snackbar.LENGTH_LONG).show()
