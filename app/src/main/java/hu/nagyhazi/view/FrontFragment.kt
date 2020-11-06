@@ -45,6 +45,7 @@ class FrontFragment: Fragment(), AdapterListener, NavigationView.OnNavigationIte
             R.id.logout -> {FirebaseAuth.getInstance().signOut()
                             navController.navigate(R.id.action_frontFragment_to_welcomeFragment)
             }
+            R.id.addFriend -> navController.navigate(R.id.action_frontFragment_to_addFriendFragment)
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
