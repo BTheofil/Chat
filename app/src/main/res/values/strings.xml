@@ -12,4 +12,6 @@
     <string name="add_friend">Add friend</string>
     <string name="your_name">Your name:</string>
     <string name="image_here">Image here</string>
+    <string name="my_name">My Name</string>
+    <string name="save">Save</string>
 </resources>
