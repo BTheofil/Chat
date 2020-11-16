@@ -10,10 +10,11 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import hu.nagyhazi.R
 import hu.nagyhazi.adapter.AdapterListener
 import hu.nagyhazi.adapter.FriendListAdapter
-import hu.nagyhazi.model.User
+import hu.nagyhazi.Room.User
 import kotlinx.android.synthetic.main.fragment_front.*
 
 class FrontFragment: Fragment(), AdapterListener, NavigationView.OnNavigationItemSelectedListener {

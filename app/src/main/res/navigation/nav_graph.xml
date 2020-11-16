@@ -46,16 +46,9 @@
             android:id="@+id/action_frontFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
         <action
-            android:id="@+id/action_frontFragment_to_addFriendFragment"
-            app:destination="@id/addFriendFragment" />
-        <action
             android:id="@+id/action_frontFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/addFriendFragment"
-        android:name="hu.nagyhazi.view.AddFriendFragment"
-        android:label="AddFriendFragment" />
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="hu.nagyhazi.view.EditProfileFragment"

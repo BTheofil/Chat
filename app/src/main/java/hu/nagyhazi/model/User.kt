@@ -1,8 +1,8 @@
 package hu.nagyhazi.model
 
-data class User (
-    val image: String,
+data class User(
     val name: String,
-    val email: String,
-    val content: String
-)
+    val profilePicture: String?
+) {
+    constructor(): this("", null)
+}

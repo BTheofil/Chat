@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hu.nagyhazi.R
-import hu.nagyhazi.model.User
+import hu.nagyhazi.Room.User
 import kotlinx.android.synthetic.main.user_card.view.*
 
 class FriendListAdapter(private var adapterListener: AdapterListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
