@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     implementation 'com.firebaseui:firebase-ui-storage:3.2.2'
+    implementation 'com.google.firebase:firebase-database:19.5.1'
 
     kotlin {
         experimental {
@@ -96,4 +97,9 @@ dependencies {
     def room_version = '2.2.5'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    apply plugin: 'kotlin-kapt'
 }

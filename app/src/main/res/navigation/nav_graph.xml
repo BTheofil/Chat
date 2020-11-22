@@ -46,11 +46,12 @@
             android:id="@+id/action_frontFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
         <action
-            android:id="@+id/action_frontFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            android:id="@+id/action_frontFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editProfileFragment"
-        android:name="hu.nagyhazi.view.EditProfileFragment"
-        android:label="EditProfileFragment" />
+        android:id="@+id/chatFragment"
+        android:name="hu.nagyhazi.view.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
 </navigation>
