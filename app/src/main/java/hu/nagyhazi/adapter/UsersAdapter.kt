@@ -32,9 +32,14 @@ class UsersAdapter(private var adapterListener: AdapterListener): RecyclerView.A
         }
     }
 
-    class ViewHolder(itemaView: View): RecyclerView.ViewHolder(itemaView){
+    fun submitList(usersList: List<User>) {
+        userList = usersList
+        notifyDataSetChanged()
+    }
 
-        private val userName: TextView = itemaView.userName
+    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
+        private val userName: TextView = itemView.userName
 
         fun bind(user: User){
 

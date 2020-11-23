@@ -7,21 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hu.nagyhazi.R
 import hu.nagyhazi.adapter.UsersAdapter
 import hu.nagyhazi.adapter.listener.AdapterListener
 import hu.nagyhazi.model.User
+import hu.nagyhazi.viewmodel.UserDataViewModel
 import kotlinx.android.synthetic.main.fragment_front.*
+import java.util.Observer
 
 class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener, AdapterListener {
 
     private lateinit var navController: NavController
     private lateinit var userAdapter: UsersAdapter
+    lateinit var userDataViewModel: UserDataViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val v = inflater.inflate(R.layout.fragment_front, container, false)
@@ -37,6 +43,12 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        userDataViewModel = UserDataViewModel()
+
+        userDataViewModel.movieDataLiveData.observe(viewLifecycleOwner, Observer { user ->
+            userAdapter.submitList(user)
+        })
+
         initRecycler()
     }
 

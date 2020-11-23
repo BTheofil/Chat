@@ -15,10 +15,12 @@ import com.google.firebase.database.FirebaseDatabase
 import hu.nagyhazi.R
 import kotlinx.android.synthetic.main.fragment_register.*
 
+
 class RegisterFragment : Fragment() {
 
     private lateinit var navController: NavController
-    private lateinit var mDatabase: DatabaseReference
+    private var database = FirebaseDatabase.getInstance()
+    private var mDatabase: DatabaseReference = database.getReference("users")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_register, container, false)
@@ -34,6 +36,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initRegister(view: View) {
+        val name = logName.text.toString()
         val email = logEmail.text.toString()
         val pw = logPw.text.toString()
         val rePw = rePassword.text.toString()
@@ -55,10 +58,9 @@ class RegisterFragment : Fragment() {
                         .build()
                     firebaseUser?.updateProfile(profileChangeRequest)
 
-                    addUserDatabase()
+                    addUserDatabase(name)
 
                     Snackbar.make(view, "Success register", Snackbar.LENGTH_LONG).show()
-
                     navController.navigate(R.id.action_registerFragment_to_frontFragment)
                 }
                 .addOnFailureListener{
@@ -68,11 +70,10 @@ class RegisterFragment : Fragment() {
             }
     }
 
-    private fun addUserDatabase() {
-        val keyID: String? = mDatabase.push().key
-        if (keyID != null) {
-            mDatabase.child(keyID).setValue("user")
-        }
+    private fun addUserDatabase(newUser: String) {
+        val inCloud = mDatabase.child(newUser)
+        val users: MutableMap<String, String> = HashMap()
+        users["name"] = newUser
+        inCloud.setValue(users)
     }
-
 }
