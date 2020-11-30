@@ -44,7 +44,7 @@ class UsersAdapter(private var adapterListener: AdapterListener): RecyclerView.A
         fun bind(user: User){
 
             user.apply {
-                userName.text = name
+                userName.text = ""// TODO: 2020. 11. 29.
             }
         }
     }

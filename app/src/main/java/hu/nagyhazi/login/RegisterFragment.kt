@@ -58,7 +58,7 @@ class RegisterFragment : Fragment() {
                         .build()
                     firebaseUser?.updateProfile(profileChangeRequest)
 
-                    addUserDatabase(name)
+                    addUserDatabase(name,email)
 
                     Snackbar.make(view, "Success register", Snackbar.LENGTH_LONG).show()
                     navController.navigate(R.id.action_registerFragment_to_frontFragment)
@@ -70,10 +70,11 @@ class RegisterFragment : Fragment() {
             }
     }
 
-    private fun addUserDatabase(newUser: String) {
+    private fun addUserDatabase(newUser: String, email: String) {
         val inCloud = mDatabase.child(newUser)
         val users: MutableMap<String, String> = HashMap()
         users["name"] = newUser
+        users["email"] = email
         inCloud.setValue(users)
     }
 }

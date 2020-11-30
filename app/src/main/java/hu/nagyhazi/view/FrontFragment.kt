@@ -1,10 +1,12 @@
 package hu.nagyhazi.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
@@ -45,18 +47,22 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
         super.onActivityCreated(savedInstanceState)
         userDataViewModel = UserDataViewModel()
 
-        userDataViewModel.movieDataLiveData.observe(viewLifecycleOwner, Observer { user ->
-            userAdapter.submitList(user)
+        userDataViewModel.getAllUser()
+        val a = userDataViewModel.usersDataLiveData
+        Log.d("HERE", a.value.toString())
+        /*
+        userDataViewModel.usersDataLiveData.observe(viewLifecycleOwner, Observer { usersList ->
+            userAdapter.submitList(usersList)
         })
-
+*/
+        
         initRecycler()
     }
 
     private fun initRecycler() {
         users_recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            userAdapter =
-                UsersAdapter(this@FrontFragment)
+            userAdapter = UsersAdapter(this@FrontFragment)
             adapter = userAdapter
         }
     }
@@ -78,7 +84,8 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     override fun onClickItem(user: User) {
-        navController.navigate(R.id.action_frontFragment_to_chatFragment)
+        val bundle = bundleOf("user" to user)
+        navController.navigate(R.id.action_frontFragment_to_chatFragment, bundle)
     }
 
 
