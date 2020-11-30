@@ -1,4 +1,4 @@
-package hu.nagyhazi.adapter
+package hu.nagyhazi.adapter.listener
 
 import hu.nagyhazi.model.User
 

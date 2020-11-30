@@ -8,4 +8,12 @@
     <string name="register">Register</string>
     <string name="logo_here">Logo here</string>
     <string name="submit">Submit</string>
+    <string name="logout">Logout</string>
+    <string name="add_friend">Add friend</string>
+    <string name="your_name">Your name:</string>
+    <string name="image_here">Image here</string>
+    <string name="my_name">My Name</string>
+    <string name="save">Save</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="back">Back</string>
 </resources>

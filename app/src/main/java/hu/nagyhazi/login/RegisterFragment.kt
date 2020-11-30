@@ -1,6 +1,5 @@
 package hu.nagyhazi.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,17 @@ import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hu.nagyhazi.R
-import hu.nagyhazi.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_register.*
+
 
 class RegisterFragment : Fragment() {
 
     private lateinit var navController: NavController
+    private var database = FirebaseDatabase.getInstance()
+    private var mDatabase: DatabaseReference = database.getReference("users")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_register, container, false)
@@ -33,6 +36,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initRegister(view: View) {
+        val name = logName.text.toString()
         val email = logEmail.text.toString()
         val pw = logPw.text.toString()
         val rePw = rePassword.text.toString()
@@ -54,9 +58,10 @@ class RegisterFragment : Fragment() {
                         .build()
                     firebaseUser?.updateProfile(profileChangeRequest)
 
-                    Snackbar.make(view, "Success register", Snackbar.LENGTH_LONG).show()
+                    addUserDatabase(name,email)
 
-                    navController.navigate(R.id.action_registerFragment_to_mainActivity)
+                    Snackbar.make(view, "Success register", Snackbar.LENGTH_LONG).show()
+                    navController.navigate(R.id.action_registerFragment_to_frontFragment)
                 }
                 .addOnFailureListener{
                     Snackbar.make(view, "Fail to create user: ${it.message}", Snackbar.LENGTH_LONG).show()
@@ -65,4 +70,11 @@ class RegisterFragment : Fragment() {
             }
     }
 
+    private fun addUserDatabase(newUser: String, email: String) {
+        val inCloud = mDatabase.child(newUser)
+        val users: MutableMap<String, String> = HashMap()
+        users["name"] = newUser
+        users["email"] = email
+        inCloud.setValue(users)
+    }
 }

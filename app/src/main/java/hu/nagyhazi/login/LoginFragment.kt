@@ -1,6 +1,5 @@
 package hu.nagyhazi.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import hu.nagyhazi.R
-import hu.nagyhazi.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.logEmail
 import kotlinx.android.synthetic.main.fragment_register.logPw
@@ -45,7 +43,7 @@ class LoginFragment : Fragment() {
                 .addOnSuccessListener  {
                     Snackbar.make(view, "Success login", Snackbar.LENGTH_LONG).show()
 
-                    navController.navigate(R.id.action_loginFragment_to_mainActivity)
+                    navController.navigate(R.id.action_loginFragment_to_frontFragment)
                 }
                 .addOnFailureListener{
                     Snackbar.make(view, "Fail to login user: ${it.message}", Snackbar.LENGTH_LONG).show()
