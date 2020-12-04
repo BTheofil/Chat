@@ -40,11 +40,13 @@ class UsersAdapter(private var adapterListener: AdapterListener): RecyclerView.A
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         private val userName: TextView = itemView.userName
+        private val userEmail: TextView = itemView.userEmail
 
         fun bind(user: User){
 
             user.apply {
-                userName.text = ""// TODO: 2020. 11. 29.
+                userName.text = name
+                userEmail.text = email
             }
         }
     }
