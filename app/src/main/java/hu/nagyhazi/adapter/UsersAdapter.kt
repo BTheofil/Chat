@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.user_card.view.*
 
 class UsersAdapter(private var adapterListener: AdapterListener): RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
-    private var userList: List<User> = ArrayList()
+    private var listOfUsers: List<User> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -21,19 +21,20 @@ class UsersAdapter(private var adapterListener: AdapterListener): RecyclerView.A
     }
 
     override fun getItemCount(): Int {
-        return userList.size
+        return listOfUsers.size
     }
 
     override fun onBindViewHolder(holder: UsersAdapter.ViewHolder, position: Int) {
         ViewHolder(holder.itemView)
-            .bind(userList[position])
+            .bind(listOfUsers[position])
         holder.itemView.setOnClickListener{
-            adapterListener.onClickItem(userList[position]);
+            adapterListener.onClickItem(listOfUsers[position]);
         }
     }
 
     fun submitList(usersList: List<User>) {
-        userList = usersList
+        listOfUsers = listOf()
+        listOfUsers = usersList
         notifyDataSetChanged()
     }
 

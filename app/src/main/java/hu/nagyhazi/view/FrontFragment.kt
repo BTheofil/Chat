@@ -1,6 +1,7 @@
 package hu.nagyhazi.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import hu.nagyhazi.R
 import hu.nagyhazi.adapter.UsersAdapter
@@ -73,7 +75,8 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     override fun onClickItem(user: User) {
-        val bundle = bundleOf("user" to user)
+        val bundle = bundleOf("toUser" to user)
+        userDataViewModel.startMessages(user)
         navController.navigate(R.id.action_frontFragment_to_chatFragment, bundle)
     }
 
