@@ -28,8 +28,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController =
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_container)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_container)
 
         submit.setOnClickListener {
             initRegister(view)

@@ -1,7 +1,6 @@
 package hu.nagyhazi.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import hu.nagyhazi.R
 import hu.nagyhazi.adapter.UsersAdapter
@@ -39,23 +37,17 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecycler()
         initNavigationView(view)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         userDataViewModel = ViewModelProviders.of(this).get(UserDataViewModel::class.java)
 
-        userDataViewModel.usersDataLiveData.observe(viewLifecycleOwner, Observer{
-            userAdapter.submitList(it)
-        })
+        initRecycler()
+        subscribeLiveData()
 
-    }
-
-    private fun initRecycler() {
-        users_recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            userAdapter = UsersAdapter(this@FrontFragment)
-            adapter = userAdapter
-        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -69,6 +61,20 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
         return true
     }
 
+    private fun subscribeLiveData() {
+        userDataViewModel.usersDataLiveData.observe(viewLifecycleOwner, Observer{
+            userAdapter.submitList(it)
+        })
+    }
+
+    private fun initRecycler() {
+        users_recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            userAdapter = UsersAdapter(this@FrontFragment)
+            adapter = userAdapter
+        }
+    }
+
     private fun initNavigationView(view: View) {
         val vac = view.findViewById<NavigationView>(R.id.nav_view)
         vac.setNavigationItemSelectedListener(this)
@@ -79,6 +85,4 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
         userDataViewModel.startMessages(user)
         navController.navigate(R.id.action_frontFragment_to_chatFragment, bundle)
     }
-
-
 }

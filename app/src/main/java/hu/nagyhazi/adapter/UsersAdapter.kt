@@ -14,7 +14,7 @@ class UsersAdapter(private var adapterListener: AdapterListener): RecyclerView.A
 
     private var listOfUsers: List<User> = ArrayList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.user_card, parent, false)
         return ViewHolder(view)
@@ -24,11 +24,11 @@ class UsersAdapter(private var adapterListener: AdapterListener): RecyclerView.A
         return listOfUsers.size
     }
 
-    override fun onBindViewHolder(holder: UsersAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         ViewHolder(holder.itemView)
             .bind(listOfUsers[position])
         holder.itemView.setOnClickListener{
-            adapterListener.onClickItem(listOfUsers[position]);
+            adapterListener.onClickItem(listOfUsers[position])
         }
     }
 

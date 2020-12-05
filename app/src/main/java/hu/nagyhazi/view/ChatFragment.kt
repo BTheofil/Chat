@@ -10,30 +10,39 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import hu.nagyhazi.R
 import hu.nagyhazi.adapter.MessageAdapter
-import hu.nagyhazi.adapter.UsersAdapter
 import hu.nagyhazi.model.User
 import hu.nagyhazi.viewmodel.UserDataViewModel
 import kotlinx.android.synthetic.main.fragment_chat.*
-import kotlinx.android.synthetic.main.fragment_front.*
-import kotlinx.android.synthetic.main.fragment_front.users_recyclerView
 
 class ChatFragment : Fragment() {
 
     private lateinit var messageAdapter: MessageAdapter
     lateinit var userDataViewModel: UserDataViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
-        return inflater.inflate(R.layout.fragment_chat, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.fragment_chat, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initRecycler()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         userDataViewModel = ViewModelProviders.of(this).get(UserDataViewModel::class.java)
 
         val selectedUser = arguments?.get ("toUser") as User
+
+        initRecycler()
+        subscribeLiveData(selectedUser)
+        initButton(selectedUser)
+    }
+
+    private fun initButton(selectedUser: User) {
+        button_chatbox_send.setOnClickListener {
+            val text = edittext_chatbox.text.toString()
+            edittext_chatbox.text.clear()
+            userDataViewModel.sendMsg(text, selectedUser)
+        }
+    }
+
+    private fun subscribeLiveData(selectedUser: User) {
         userDataViewModel.loadMsg(selectedUser)
         userDataViewModel.usersMessageDataLiveData.observe(viewLifecycleOwner, Observer{
             messageAdapter.submitList(it)

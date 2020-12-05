@@ -7,21 +7,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hu.nagyhazi.R
 import hu.nagyhazi.model.Message
-import hu.nagyhazi.model.User
 import kotlinx.android.synthetic.main.message_bubble.view.*
 
 class MessageAdapter: RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
 
-    private var messages: List<Message> = arrayListOf(Message("asd", "asd"))
+    private var messages: List<Message> = arrayListOf(Message("", ""))
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.message_bubble, parent, false)
-        return MessageAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MessageAdapter.ViewHolder, position: Int) {
-        MessageAdapter.ViewHolder(holder.itemView)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        ViewHolder(holder.itemView)
             .bind(messages[position])
     }
 

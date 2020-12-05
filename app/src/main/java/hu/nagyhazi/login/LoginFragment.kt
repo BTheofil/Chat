@@ -23,8 +23,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController =
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_container)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_container)
 
         btnLogin.setOnClickListener {
             initLogin(view)

@@ -10,7 +10,6 @@ import com.google.firebase.database.*
 import hu.nagyhazi.model.Message
 import hu.nagyhazi.model.User
 
-
 class UserDataViewModel(application: Application): AndroidViewModel(application) {
 
     val usersDataLiveData: MutableLiveData<MutableList<User>> = MutableLiveData()
@@ -24,29 +23,16 @@ class UserDataViewModel(application: Application): AndroidViewModel(application)
     private var loadMessage: MutableList<Message> = ArrayList()
 
     init {
-        originalData.clear()
         getAllUser()
     }
 
     private fun getAllUser() {
+        originalData.clear()
         mDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 getAllUsersData(dataSnapshot.value as Map<String?, Any?>?)
                 usersDataLiveData.postValue(originalData)
-                //var a = mutableMapOf<String, Any>()
-                //a = dataSnapshot.value
-
-                /*for (data in dataSnapshot.children){
-                    val temp = data.value
-                    val a: MutableMap<String, User>
-                    a.put(temp[0], temp.)
-                    //originalData.add(temp as MutableList<User>)
-                    //originalData.add(User(temp as MutableMap<String, User>))
-                    Log.d("IM_IN_HERE", originalData[3].name)
-                }*/
-
-                //Log.d("IN", originalData[1].data["email"].toString())
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -58,46 +44,33 @@ class UserDataViewModel(application: Application): AndroidViewModel(application)
     }
 
     private fun getAllUsersData(users: Map<String?, Any?>?) {
-        //val phoneNumbers: ArrayList<Long?> = ArrayList()
-
-        //iterate through each user, ignoring their UID
         if (users != null) {
             for ((_, value) in users) {
-
-                //Get user map
                 val singleUser = value as Map<*, *>
-                singleUser.values
                 val name = singleUser["name"] as String
                 val email = singleUser["email"] as String
                 val conversation = singleUser["conversation"] as ArrayList<String>
                 originalData.add(User(name,email,conversation))
-                /*for ((_, value) in singleUser){
-                    val data = value as Map<*,*>
-                    val a = data["name"] as String
-                    val b = data["email"] as String
-                    val c = data["conversation"] as ArrayList<String>
-                    originalData.add(User(a,b,c))
-                }*/
-
-                /*val a = singleUser["name"] as String
-                val b = singleUser["email"] as String
-                val c = singleUser["conversation"] as ArrayList<String>
-                originalData.add(User(a,b,c))*/
-                //Get phone field and append to list
-                //phoneNumbers.add(singleUser["phone"] as Long?)
             }
         }
     }
 
-    fun loadMsg(clickedUser: User){
-        val actualUser = getCurrentUserData()
-        msgDatabase.child(actualUser.name + clickedUser.name)
+    fun sendMsg(text: String, clickedUser: User){
+        val actualUserName = FirebaseAuth.getInstance().currentUser?.email?.split('@')?.get(0)
+        val messageStorageName = actualUserName + clickedUser.name
+        actualUserName?.let { Message(it, text) }?.let { loadMessage.add(it) }
+        msgDatabase.child(messageStorageName).setValue(loadMessage)
+    }
 
+    fun loadMsg(clickedUser: User){
         loadMessage.clear()
-        msgDatabase.addValueEventListener(object : ValueEventListener {
+
+        val actualUserName = FirebaseAuth.getInstance().currentUser?.email?.split('@')?.get(0)
+        val messageStorageName = actualUserName + clickedUser.name
+        msgDatabase.child(messageStorageName).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                getAllMessageData(dataSnapshot.value as Map<String?, Any?>?)
+                getAllMessageData(dataSnapshot.value)
                 usersMessageDataLiveData.postValue(loadMessage)
             }
 
@@ -108,46 +81,32 @@ class UserDataViewModel(application: Application): AndroidViewModel(application)
         })
     }
 
-    private fun getAllMessageData(message: Map<String?, Any?>?){
-        val currentUser = getCurrentUserData()
+    private fun getAllMessageData(message: Any?){
         if (message != null) {
-            for ((key, value) in message) {
-                for (kapcsolatok in currentUser.conversation){
-                    if (kapcsolatok == key){
-                        val info = value as ArrayList<*>
-                        for (part in info){
-                            part as HashMap<*, *>
-                            val id = part["senderId"] as String
-                            val conti = part["content"] as String
-                            loadMessage.add(Message(id,conti))
-                        }
-                        //loadMessage.add(info)
-                        break
-                    }
-                }
-
-                //Get user map
-                //val singleUser = value as ArrayList<*>
-                //val name = singleUser["content"] as String
-                //val email = singleUser["senderId"] as String
-                //loadMessage.add(Message(name,email))
-
+            message as ArrayList<*>
+            for (part in message){
+                part as HashMap<*,*>
+                val id = part["senderId"] as String
+                val cntnt = part["content"] as String
+                loadMessage.add(Message(id,cntnt))
             }
         }
     }
 
     fun startMessages(clickedUser: User){
         val actualUser = getCurrentUserData()
-        msgDatabase.child(actualUser.name + clickedUser.name)
-        loadMessage.add(Message(actualUser.name, "Now we can talk"))
-        msgDatabase.child(actualUser.name + clickedUser.name).setValue(loadMessage)
 
         //setup two users conversation lists
-        actualUser.conversation.add(actualUser.name + clickedUser.name)
-        clickedUser.conversation.add(actualUser.name + clickedUser.name)
+        if (!(actualUser.conversation.contains(actualUser.name + clickedUser.name))){
+            actualUser.conversation.add(actualUser.name + clickedUser.name)
+            clickedUser.conversation.add(actualUser.name + clickedUser.name)
 
-        mDatabase.child(actualUser.name).child("conversation").setValue(actualUser.conversation)
-        mDatabase.child(clickedUser.name).child("conversation").setValue(clickedUser.conversation)
+            mDatabase.child(actualUser.name).child("conversation").setValue(actualUser.conversation)
+            mDatabase.child(clickedUser.name).child("conversation").setValue(clickedUser.conversation)
+
+            loadMessage.add(Message(actualUser.name, "Now we can talk"))
+            msgDatabase.child(actualUser.name + clickedUser.name).setValue(loadMessage)
+        }
 
     }
 
