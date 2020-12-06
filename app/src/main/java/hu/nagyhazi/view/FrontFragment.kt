@@ -1,7 +1,6 @@
 package hu.nagyhazi.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -9,21 +8,19 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import hu.nagyhazi.R
 import hu.nagyhazi.adapter.UsersAdapter
 import hu.nagyhazi.adapter.listener.AdapterListener
 import hu.nagyhazi.model.User
 import hu.nagyhazi.viewmodel.UserDataViewModel
 import kotlinx.android.synthetic.main.fragment_front.*
-import java.util.Observer
 
 class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener, AdapterListener {
 
@@ -45,26 +42,12 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        userDataViewModel = UserDataViewModel()
 
-        userDataViewModel.getAllUser()
-        val a = userDataViewModel.usersDataLiveData
-        Log.d("HERE", a.value.toString())
-        /*
-        userDataViewModel.usersDataLiveData.observe(viewLifecycleOwner, Observer { usersList ->
-            userAdapter.submitList(usersList)
-        })
-*/
-        
+        userDataViewModel = ViewModelProviders.of(this).get(UserDataViewModel::class.java)
+
         initRecycler()
-    }
+        subscribeLiveData()
 
-    private fun initRecycler() {
-        users_recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            userAdapter = UsersAdapter(this@FrontFragment)
-            adapter = userAdapter
-        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -78,15 +61,28 @@ class FrontFragment: Fragment(), NavigationView.OnNavigationItemSelectedListener
         return true
     }
 
+    private fun subscribeLiveData() {
+        userDataViewModel.usersDataLiveData.observe(viewLifecycleOwner, Observer{
+            userAdapter.submitList(it)
+        })
+    }
+
+    private fun initRecycler() {
+        users_recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            userAdapter = UsersAdapter(this@FrontFragment)
+            adapter = userAdapter
+        }
+    }
+
     private fun initNavigationView(view: View) {
         val vac = view.findViewById<NavigationView>(R.id.nav_view)
         vac.setNavigationItemSelectedListener(this)
     }
 
     override fun onClickItem(user: User) {
-        val bundle = bundleOf("user" to user)
+        val bundle = bundleOf("toUser" to user)
+        userDataViewModel.startMessages(user)
         navController.navigate(R.id.action_frontFragment_to_chatFragment, bundle)
     }
-
-
 }

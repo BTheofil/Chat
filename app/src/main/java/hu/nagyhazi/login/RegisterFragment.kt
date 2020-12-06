@@ -13,6 +13,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import hu.nagyhazi.R
+import hu.nagyhazi.model.User
 import kotlinx.android.synthetic.main.fragment_register.*
 
 
@@ -27,8 +28,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController =
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_container)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_container)
 
         submit.setOnClickListener {
             initRegister(view)
@@ -70,11 +70,13 @@ class RegisterFragment : Fragment() {
             }
     }
 
-    private fun addUserDatabase(newUser: String, email: String) {
-        val inCloud = mDatabase.child(newUser)
-        val users: MutableMap<String, String> = HashMap()
-        users["name"] = newUser
-        users["email"] = email
+    private fun addUserDatabase(newUserName: String, email: String) {
+        val inCloud = mDatabase.child(newUserName)
+        val temp = arrayListOf("start")
+        val users = User(newUserName,email,temp)
+        //val users: MutableMap<String, User> = HashMap()
+        //users.add(User(newUserName,email,temp))
+        //users["Info"] = User(newUserName, email, temp)
         inCloud.setValue(users)
     }
 }
